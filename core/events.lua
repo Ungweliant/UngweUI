@@ -1,21 +1,18 @@
 local EventFrame = CreateFrame("Frame")
 local handlers = {}
 
-EventFrame:SetScript("OnEvent", function(_, event, ...)
-  UngweUI:Debug("Event empfangen:", event)
-
-  if handlers[event] then
-    for _, callback in ipairs(handlers[event]) do
-      callback(...)
-    end
+function UngweUI:RegisterEvent(event, callback)
+  if not handlers[event] then
+    handlers[event] = {}
+    EventFrame:RegisterEvent(event)
   end
-end)
+  table.insert(handlers[event], callback)
+end
 
-
-EventFrame:SetScript("OnEvent", function(_, event, ...)
+EventFrame:SetScript("OnEvent", function(self, event, arg1, arg2, arg3)
   if handlers[event] then
     for _, callback in ipairs(handlers[event]) do
-      callback(...)
+      callback(arg1, arg2, arg3)
     end
   end
 end)
