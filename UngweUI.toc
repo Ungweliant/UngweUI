@@ -4,4 +4,5 @@
 ## Version: 0.1
 ## SavedVariables: UngweDB
 
-Core/init.lua
+core\core.lua
+core\events.lua
